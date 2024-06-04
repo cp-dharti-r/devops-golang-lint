@@ -1,0 +1,27 @@
+run:
+  paths:
+    - "./..."
+    - "!.git/**"
+  issues-exit-code: 0
+  tests: false
+  linters:
+    enable:
+      - deadcode
+      - errcheck
+      - goconst
+      - gocyclo
+      - gofmt
+      - goimports
+      - golint
+      - gosec
+      - ineffassign
+      - maligned
+      - misspell
+      - staticcheck
+      - structcheck
+      - typecheck
+      - unused
+    disable-all: true
+    deadline: 2m
+    skip-dirs:
+      - vendor
