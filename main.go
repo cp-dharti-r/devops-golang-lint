@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -9,7 +10,6 @@ import (
 	"github.com/gin-gonic/gin/binding"
 	"github.com/jmoiron/sqlx"
 )
-
 
 var db *sqlx.DB
 
@@ -25,7 +25,9 @@ func main() {
 	router.PUT("/api/users/:id", Update)
 	router.DELETE("/api/users/:id", Delete)
 
-	router.Run(":8000")
+	if err := router.Run(":8000"); err != nil {
+		fmt.Printf("Error starting server: %v", err)
+	}
 
 	defer db.Close()
 }
@@ -134,7 +136,12 @@ func Delete(c *gin.Context) {
 		return
 	}
 
-	db.Exec("DELETE FROM users WHERE id = ?", id)
+	result, err := db.Exec("DELETE FROM users WHERE id = ?", id)
+	if err != nil {
+		fmt.Printf("Error executing query: %v", err)
+	}
+	rowsAffected, _ := result.RowsAffected()
+	fmt.Printf("Rows affected: %d", rowsAffected)
 
 	c.JSON(http.StatusOK, gin.H{})
 }

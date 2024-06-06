@@ -24,4 +24,4 @@ run:
     disable-all: true
     deadline: 2m
     skip-dirs:
-      - vendor
+      - .vscode

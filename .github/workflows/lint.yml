@@ -22,8 +22,7 @@ jobs:
           go-version: 1.21.3
 
       - name: Install golangci-lint
-        run: |
-          curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s v1.42.1
+        run: snap install golangci-lint --classic
 
       - name: Run golangci-lint
         run: golangci-lint run --config .golangci.yml
